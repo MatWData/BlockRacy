@@ -19,5 +19,5 @@ Blockchains are secure and transparent, utilising them we can ensure that everyo
 No one person or group will have more influence than any other. This will ensure that the system is fair and works for all. Impenetrable to foreign influence, which is increasingly important in the digital age. 
 
 
-If you want to get involved, please reach out. I know there has been a lot of talk about voting on the blockchain - some negative. But frankly, I don't care. I want a safe and reliable place to gain a reliable census of the opinions of the nation. We as democracies can do better than what is going on right, whether we have to force our governments to listen to us then so be it. We are free after all.
+If you want to get involved, please reach out. I know there has been a lot of talk about voting on the blockchain - some negative. But frankly, I don't care. I want a safe and transparent place to gain a reliable census of the opinions of the nation. We as democracies can do better than what is going on right, whether we have to force our governments to listen to us then so be it. We are free after all.
 
