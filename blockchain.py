@@ -58,7 +58,7 @@ class Blockchain:
     
     def create_vote(self, user, issueNumber, vote):
 
-        if userData.userIsValid(user) == False:
+        if userData.User.userIsValid(user) == False:
             print("User is not valid")
             return
 

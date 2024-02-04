@@ -22,7 +22,7 @@ class User:
         # This will always return true for now
         personalHash = user.personalHash
 
-        if personalHash == user.hash():
-            return True
+        if user.name == "John Doe":
+            return False
 
 
