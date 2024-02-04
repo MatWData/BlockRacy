@@ -1,5 +1,6 @@
 import hashlib
 import userData
+import pickle
 from datetime import datetime
 
 class Block:
@@ -19,10 +20,25 @@ class Block:
 class Blockchain:
 
     def __init__(self):
-        self.chain = [self.create_genesis_block()]
+        self.chain = self.load_chain()
+        self.save_chain()
+    
+    def load_chain(self):
+        try:
+            with open("blockchain.pkl", "rb") as f:
+                return pickle.load(f)
+            
+        except FileNotFoundError:
+            print("No chain found. Creating a new one")
+            return [self.create_genesis_block()]
+    
+    def save_chain(self):
+        with open("blockchain.pkl", "wb") as f:
+            pickle.dump(self.chain, f)
     
     def create_genesis_block(self):
-        return Block(0, "Genesis Block", "0")
+        genesis_block = Block(0, "Genesis Block", "We Have To Save Democracy")
+        return genesis_block
     
     def get_latest_block(self):
         return self.chain[-1]
@@ -31,8 +47,8 @@ class Blockchain:
         previous_hash = self.get_latest_block().hash
         index = len(self.chain)
         new_block = Block(index, data, previous_hash)
-
         self.chain.append(new_block)
+        self.save_chain()
 
     def is_valid(self):
         for i in range(1, len(self.chain)):
@@ -46,29 +62,8 @@ class Blockchain:
             
         return True
     
-    def create_user(self, name = None, NINumber = None, postcode = None):
-
-        if name == None:
-            name = input("Enter your name: ")
-            NINumber = input("Enter your National Insurance Number: ")
-            postcode = input("Enter your postcode: ")
-
-        user = userData.User(name, NINumber, postcode)
-        return user
     
-    def create_vote(self, user, issueNumber, vote):
-
-        if userData.User.userIsValid(user) == False:
-            print("User is not valid")
-            return
-
-        vote_data = {
-            "voter": user,
-            "issueNumber": issueNumber,
-            "vote": vote
-        }
-
-        self.add_block(vote_data)
+    
 
 
     

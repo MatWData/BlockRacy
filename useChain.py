@@ -1,26 +1,52 @@
 import blockchain
 import userData
+import pickle
 
 
+class useChain:
+    def __init__(self):
+        self.chain = blockchain.Blockchain()
+        self.users = self.load_users()
+        print(self.users)
+    
+    def load_users(self):
+        try:
+            with open("users.pkl", "rb") as f:
+                return pickle.load(f)
+            
+        except FileNotFoundError:
+            print("No users yet.")
+            return set()
+    
+    def save_users(self):
+        with open("users.pkl", "wb") as f:
+            pickle.dump(self.users, f)
+    
+    def create_user(self, name, NINumber, postcode):
+        user = userData.User(name, NINumber, postcode)
+        uid = user.uid
+        
 
+        for existing_user in self.users:
+            if existing_user[1] == uid:
+                print("User already exists")
+                return None
+        
+        user_info = (user.personalHash, uid)
+        self.users.add(user_info)
+        self.save_users()
+        return user
+    
+    def create_vote(self, user, issueNumber, vote):
 
-# Test the code
-chain = blockchain.Blockchain()
+        if user is None:
+            return
 
+        vote_data = {
+            "voter": user.personalHash,
+            "issueNumber": issueNumber,
+            "vote": vote
+        }
 
-user1 = chain.create_user("John Doe","AB123456C", "AB1 2CD")
-user2 = chain.create_user("Jane Doe", "CD123456A", "CD3 4EF")
-user3 = chain.create_user("John Smith", "EF123456B", "EF5 6GH")
+        self.chain.add_block(vote_data)
 
-chain.create_vote(user1, 1, "yes")
-chain.create_vote(user2, 1, "no")
-chain.create_vote(user3, 1, "yes")
-
-for block in chain.chain:
-    print("Block Index: ", block.index)
-    print("Timestamp: ", block.timestamp)
-    print("Data: ", block.data)
-    print("Previous Hash: ", block.previous_hash)
-    print("Hash: ", block.hash)
-    print("=====================================")
-    print("\n")
